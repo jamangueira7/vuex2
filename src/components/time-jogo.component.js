@@ -1,11 +1,12 @@
-import event from '../event'
+import store from '../store';
+
 export default {
   template:` 
    
         <div>
           <form class="form-inline">
             <div class="form-group">
-              <input type="text" class="form-control" v-model="novoJogo.casa.gols">
+              <input type="text" class="form-control" v-model="novoJogo.casa.gols" >
               <label class="control-label" v-if="novoJogo.casa.time">
                 {{novoJogo.casa.time.nome}}
                 <img :src="novoJogo.casa.time.escudo" style="height: 30px; width: 30px;">
@@ -22,11 +23,9 @@ export default {
             <button type="button" class="btn btn-primary" @click="fimJogo">Fim de jogo</button>
           </form>
         </div>`,
-  mounted() {
-    event.$on('get-times', (times)=> {
-        this.initJogo(times);
-    });
-  },
+ mounted() {
+    this.initJogo(store.state.times);
+ },
   data() {
     return {
       novoJogo : {
@@ -44,10 +43,13 @@ export default {
   methods: {
      fimJogo(){
        let timeAdversario = this.novoJogo.fora.time;
+       let timeCasa = this.novoJogo.casa.time;
        let gols = +this.novoJogo.casa.gols;
        let golsAdversario = +this.novoJogo.fora.gols;
-       this.novoJogo.casa.time.fimJogo(timeAdversario, gols, golsAdversario);
-       event.$emit('show-time-list')
+       timeCasa.fimJogo(timeAdversario, gols, golsAdversario);
+       store.commit('update', timeCasa);
+       store.commit('update', timeAdversario);
+       store.commit('show-time-list');
      },
      initJogo(times){
        let indexCada = Math.floor(Math.random() * 20),
