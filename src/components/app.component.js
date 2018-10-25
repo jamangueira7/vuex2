@@ -2,6 +2,7 @@ import TimeListComponent from './time-list.component';
 import TimeJogoComponent from './time-jogo.component';
 import TimeZonaComponent from './time-zona.component';
 import store from '../store';
+
 export default {
   components: {
     'time-list':TimeListComponent,
@@ -15,7 +16,7 @@ export default {
         <a class="btn btn-primary" @click="showNovoJogo">Novo Jogo</a>
         <a class="btn btn-primary" @click="showZona">Ver zona</a>
         <br/><br/>
-        <div v-if="view == 'tabela'">
+        <div v-show="view == 'tabela'">
           <time-list></time-list>
         </div>
     
@@ -26,6 +27,12 @@ export default {
          <time-zona></time-zona>
         </div>
   </div>`,
+  computed: {
+    view(){
+      return store.state.view;
+      //return this.$store.state.view;
+    }
+  },
   methods: {
     showNovoJogo(){
       store.commit('show-time-novojogo')
@@ -36,11 +43,6 @@ export default {
     showTabela(){
       store.commit('show-time-list')
     },
-  },
- computed: {
-    view(){
-      return store.state.view;
-      //return this.$store.state.view;
-    }
- }
+  }
+
 }

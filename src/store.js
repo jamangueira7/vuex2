@@ -17,8 +17,8 @@ const mutations = {
    },
    update(state, time){
       let index = state.times.findIndex(element => time.id == element.id);
-      if (index != -1) {
-        state.times[index] = time;
+     if (index != -1) {
+       state.times[index] = time;
       }
    },
   'show-time-list'(state){

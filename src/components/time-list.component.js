@@ -4,7 +4,6 @@ import store from '../store';
 export default {
   template:` 
   <div >
-   
           <input type="text" class="form-control" v-model="filter">
           <table class="table table-striped">
             <thead>
@@ -50,16 +49,16 @@ export default {
     }
   },
   computed:{
+    times() {
+      //return this.$store.state.times;
+      return store.state.times;
+    },
     timesFiltered(){
       let colecao =  _.orderBy(this.times, this.order.keys, this.order.sort);
 
       return _.filter(colecao, item => {
         return item.nome.indexOf(this.filter) >= 0;
       });
-    },
-    times() {
-      //return this.$store.state.times;
-      return store.state.times;
     }
   }
 }

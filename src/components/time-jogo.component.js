@@ -6,7 +6,7 @@ export default {
         <div>
           <form class="form-inline">
             <div class="form-group">
-              <input type="text" class="form-control" v-model="novoJogo.casa.gols" >
+              <input type="text" class="form-control" v-model="novoJogo.casa.gols" @keyup.enter="fimJogo">
               <label class="control-label" v-if="novoJogo.casa.time">
                 {{novoJogo.casa.time.nome}}
                 <img :src="novoJogo.casa.time.escudo" style="height: 30px; width: 30px;">
